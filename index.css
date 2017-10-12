@@ -1,0 +1,14 @@
+.player {
+	border: 1px solid black;
+}
+
+.button {
+	height: 40px;
+	width: 120px;
+	background-color: grey;
+	margin: auto;
+}
+.dice {
+	border: 1px solid black;
+	height: 80px;
+}

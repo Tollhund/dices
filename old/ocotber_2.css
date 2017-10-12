@@ -1,0 +1,30 @@
+#main {
+    text-align: center;
+}
+.box {
+    display: inline-block;
+    height: 200px;
+}
+
+.table {
+    background-color: white;
+}
+
+.dice {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.roll {
+    background-color: grey;
+    vertical-align: middle;
+}
+
+.status {
+    text-align: center;
+    color: red;
+    font-size: 32px;
+}
