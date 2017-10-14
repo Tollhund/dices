@@ -6,7 +6,7 @@ function player(id) {
     var playerDices = [];
     
 	this.drawBox = function (plBoxSize) {
-		var container = document.querySelector('#game>.row');
+		var container = document.querySelector('#game>#playerBox');
 		var plBox = '<div id="' +
 					this.ident +
 					'" class="player' + " " +
@@ -46,6 +46,9 @@ function player(id) {
 	this.getDiceQ = function(){
 		return diceQ;
 	}
+    this.setDiceQ = function(quantity) {
+        diceQ = quantity;
+    }
 	this.setDiceSumm = function(diceValue) {
 		diceSumm += diceValue;
 	}
@@ -174,11 +177,21 @@ function game(){
 	var players = [];
 	var plBoxSize = "";
 	var plQ = +prompt("Введите количество игроков", "0");
+    var compareWin = {
+        div: document.getElementById('compareTwo'),
+        colBox: function() {
+            var box = '<div class="compBox col-6"></div>';
+            compareWin.div.innerHTML += box;
+        }
+    }
+    compareWin.colBox();
 
 	plBoxSize = checkSizeDraw(plQ);
 
 	for (var i = 0; i < plQ; i++ ) {
 		players.push(new player(i));
+        var diceQuantity = +prompt( "Cколько кубиков у" + players[i].ident + "?" );
+        players[i].setDiceQ(diceQuantity);
 		players[i].drawBox(plBoxSize);
 		console.log("Player " + players[i].ident + " added");
 	}
