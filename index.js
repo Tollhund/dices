@@ -1,7 +1,9 @@
 function player(id) {
 	this.ident = "p"+(id+1);
 	var diceQ = 2;
-	var diceSumm = 0;
+	var playerDices = [];
+    var diceSumm = 0;
+    var checkTurn = false;
 	this.drawBox = function(plBoxSize) {
 	var diceSumm = 0;
 	this.drawBox = function(plBoxSize) {
@@ -27,7 +29,6 @@ function player(id) {
 	var playerDices = [];
 	this.roll = function() {
 <<<<<<< HEAD
-<<<<<<< HEAD
         if (checkTurn) {
             console.log (this.ident + "Уже походил");
         if(checkTurn){
@@ -47,18 +48,13 @@ function player(id) {
                 this.setDiceSumm(playerDices[i].value);
             }
 =======
-=======
->>>>>>> parent of 0324f3b... 12.10
 		var playerD = document.querySelectorAll('#' + this.ident + ' .dice');
 		this.setDefault();
 		for (var i = 0; i < diceQ; i++) {
 			playerDices.push(new dice());
 			playerDices[i].setValue(playerD[i]);
 			this.setDiceSumm(playerDices[i].value);
-<<<<<<< HEAD
 >>>>>>> parent of 17b6deb... little bit reworked
-=======
->>>>>>> parent of 0324f3b... 12.10
 		}
 		console.log(this.getDiceSumm());
 	}
@@ -75,7 +71,6 @@ function player(id) {
 		return diceSumm;
 	}
 	this.setDefault = function() {
-<<<<<<< HEAD
 <<<<<<< HEAD
         checkTurn = false;
 		diceSumm = 0;
@@ -104,11 +99,6 @@ function player(id) {
 		playerDices = [];
 	}
 >>>>>>> parent of 17b6deb... little bit reworked
-=======
-		diceSumm = 0;
-		playerDices = [];
-	}
->>>>>>> parent of 0324f3b... 12.10
 }
 function dice() {
 	this.type = "d6";
@@ -116,7 +106,6 @@ function dice() {
 	this.value = 0;
 	this.setValue = function(div, diceValue) {
 		diceDiv = div;
-<<<<<<< HEAD
 <<<<<<< HEAD
         var rNumber;
         if (diceValue == undefined) {
@@ -141,12 +130,6 @@ function dice() {
 		diceDiv.textContent = rNumber;
 		this.value = rNumber;
 	}
-=======
-		var rNumber = diceValue || Math.floor((Math.random() * 6) + 1);
-		diceDiv.textContent = rNumber;
-		this.value = rNumber;
-	}
->>>>>>> parent of 0324f3b... 12.10
 }
 
 function checkSizeDraw(quantity) {
@@ -186,7 +169,6 @@ function winDisplay(players) {
 		}
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
     for (var i = 0; i < players.length; i++) {
         if (players[i].getDiceSumm() == winnerDiceSum && players[i].ident != winner[0]){
             winner.push[players[i].ident];   
@@ -198,8 +180,6 @@ function winDisplay(players) {
     }
 =======
 >>>>>>> parent of 17b6deb... little bit reworked
-=======
->>>>>>> parent of 0324f3b... 12.10
 	console.log ("Winner is " + winner);
 	for(var j = 0; j < players.length; j++) {
 		players[j].setDefault();
@@ -216,10 +196,7 @@ function rollEvent(players) {
 					players[j].roll();
 					if (checkWin(players)) {
 						winDisplay(players);
-<<<<<<< HEAD
 					} console.log(players[j].getPlayerDices());
-=======
->>>>>>> parent of 0324f3b... 12.10
 					}
 					console.log(players[j].getPlayerDices());
 				}
