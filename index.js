@@ -1,18 +1,15 @@
 function player(id) {
 	this.ident = "p" + (id + 1);
 	var diceQ = 2;
-<<<<<<< HEAD
 	var playerDices = [];
     var diceSumm = 0;
     var checkTurn = false;
 	this.drawBox = function(plBoxSize) {
-=======
 	var diceSumm = 0;
     var checkTurn = false;
     var playerDices = [];
     
 	this.drawBox = function (plBoxSize) {
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
 		var container = document.querySelector('#game>.row');
 		var plBox = '<div id="' +
 					this.ident +
@@ -33,13 +30,10 @@ function player(id) {
 		return dicesBox;
 	}
 	this.roll = function() {
-<<<<<<< HEAD
         if (checkTurn) {
             console.log (this.ident + "Уже походил");
-=======
         if(checkTurn){
             console.log("Игрок " + this.ident + " уже походил!");
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
         } else {
             var playerD = document.querySelectorAll('#' + this.ident + ' .dice');
             this.setDefault();
@@ -47,17 +41,14 @@ function player(id) {
             for (var i = 0; i < diceQ; i++) {
                 playerDices.push(new dice());
                 playerDices[i].setValue(playerD[i]);
-<<<<<<< HEAD
                 this.setDiceSumm(playerDices[i].value);
             }
             console.log(this.getDiceSumm());
         }
-=======
                 //this.setSnakeEyes(); - подкрутка =)
                 this.setDiceSumm(playerDices[i].value);
             }
 		}
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
 	}
 	this.getPlayerDices = function(){
 		return playerDices;
@@ -72,24 +63,19 @@ function player(id) {
 		return diceSumm;
 	}
 	this.setDefault = function() {
-<<<<<<< HEAD
         checkTurn = false;
 		diceSumm = 0;
         for (var i = 0; i < playerDices.length; i++) {
-=======
 		checkTurn = false;
         diceSumm = 0;
         for(var i = 0; i < playerDices.length; i++){
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
             playerDices[i].setValue(playerDices[i].getDiceDiv(), 0);
         }
 		playerDices = [];
 	}
     this.logDices = function() {
-<<<<<<< HEAD
         for (i = 0; i < playerDices.length; i++) {
             console.log(playerDices[i].value);
-=======
         for(var i = 0; i < playerDices.length; i++){
             console.log("Бросок игрока " + this.ident + " : " + playerDices[i].value);    
         }
@@ -97,7 +83,6 @@ function player(id) {
     this.setSnakeEyes = function () {
         for(var i = 0; i < playerDices.length; i++){
             playerDices[i].setValue(playerDices[i].getDiceDiv(), 1);
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
         }
     }
 }
@@ -106,7 +91,6 @@ function dice() {
 	var diceDiv = ""; 
 	this.value = 0;
 	this.setValue = function(div, diceValue) {
-<<<<<<< HEAD
 		diceDiv = div;
         var rNumber;
         if (diceValue == undefined) {
@@ -118,7 +102,6 @@ function dice() {
 		this.value = rNumber;
 	}
     this.getDiceDiv = function() {
-=======
 		var rNumber;
         diceDiv = div;
         if(diceValue == undefined){
@@ -130,7 +113,6 @@ function dice() {
 		this.value = rNumber;
 	}
     this.getDiceDiv = function(){
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
         return diceDiv;
     }
 }
@@ -170,17 +152,14 @@ function winDisplay(players) {
 			winnerDiceSum = players[i].getDiceSumm();
 		}
 	}
-<<<<<<< HEAD
     for (var i = 0; i < players.length; i++) {
         if (players[i].getDiceSumm() == winnerDiceSum && players[i].ident != winner[0]){
             winner.push[players[i].ident];   
         }
-=======
     for (i = 0; i < players.length; i++) {
         if (players[i].getDiceSumm() == winnerDiceSum && players[i].ident != winner[0]) {
 			winner.push(players[i].ident);
 		}
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
     }
 	console.log ("Winner is " + winner);
 	for(var j = 0; j < players.length; j++) {
@@ -199,11 +178,8 @@ function rollEvent(players) {
                     players[j].logDices();
 					if (checkWin(players)) {
 						winDisplay(players);
-<<<<<<< HEAD
 					} console.log(players[j].getPlayerDices());
-=======
 					}
->>>>>>> 17b6deb856b6d27390fe62e1f239ebb246e17a12
 				}
 			}
 		}
