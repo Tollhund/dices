@@ -1,7 +1,9 @@
 function player(id) {
 	this.ident = "p"+(id+1);
 	var diceQ = 2;
-	var diceSumm = 0;
+	var playerDices = [];
+    var diceSumm = 0;
+    var checkTurn = false;
 	this.drawBox = function(plBoxSize) {
 		var container = document.querySelector('#game>.row');
 		var plBox = '<div id="' +
@@ -22,16 +24,20 @@ function player(id) {
 		}
 		return dicesBox;
 	}
-	var playerDices = [];
 	this.roll = function() {
-		var playerD = document.querySelectorAll('#' + this.ident + ' .dice');
-		this.setDefault();
-		for (var i = 0; i < diceQ; i++) {
-			playerDices.push(new dice());
-			playerDices[i].setValue(playerD[i]);
-			this.setDiceSumm(playerDices[i].value);
-		}
-		console.log(this.getDiceSumm());
+        if (checkTurn) {
+            console.log (this.ident + "Уже походил");
+        } else {
+            var playerD = document.querySelectorAll('#' + this.ident + ' .dice');
+            this.setDefault();
+            checkTurn = true;
+            for (var i = 0; i < diceQ; i++) {
+                playerDices.push(new dice());
+                playerDices[i].setValue(playerD[i]);
+                this.setDiceSumm(playerDices[i].value);
+            }
+            console.log(this.getDiceSumm());
+        }
 	}
 	this.getPlayerDices = function(){
 		return playerDices;
@@ -46,9 +52,18 @@ function player(id) {
 		return diceSumm;
 	}
 	this.setDefault = function() {
+        checkTurn = false;
 		diceSumm = 0;
+        for (var i = 0; i < playerDices.length; i++) {
+            playerDices[i].setValue(playerDices[i].getDiceDiv(), 0);
+        }
 		playerDices = [];
 	}
+    this.logDices = function() {
+        for (i = 0; i < playerDices.length; i++) {
+            console.log(playerDices[i].value);
+        }
+    }
 }
 function dice() {
 	this.type = "d6";
@@ -56,10 +71,18 @@ function dice() {
 	this.value = 0;
 	this.setValue = function(div, diceValue) {
 		diceDiv = div;
-		var rNumber = diceValue || Math.floor((Math.random() * 6) + 1);
+        var rNumber;
+        if (diceValue == undefined) {
+            rNumber = Math.floor((Math.random() * 6) + 1);
+        } else {
+            rNumber = diceValue   
+        } 
 		diceDiv.textContent = rNumber;
 		this.value = rNumber;
 	}
+    this.getDiceDiv = function() {
+        return diceDiv;
+    }
 }
 
 function checkSizeDraw(quantity) {
@@ -90,14 +113,19 @@ function checkWin(players) {
 }
 
 function winDisplay(players) {
-	var winner = players[0].ident;
+	var winner = [players[0].ident];
 	var winnerDiceSum = players[0].getDiceSumm();
 	for (i = 1; i < players.length; i++) {
 		if (players[i].getDiceSumm() > winnerDiceSum) {
-			winner = players[i].ident;
+			winner = [players[i].ident];
 			winnerDiceSum = players[i].getDiceSumm();
 		}
 	}
+    for (var i = 0; i < players.length; i++) {
+        if (players[i].getDiceSumm() == winnerDiceSum && players[i].ident != winner[0]){
+            winner.push[players[i].ident];   
+        }
+    }
 	console.log ("Winner is " + winner);
 	for(var j = 0; j < players.length; j++) {
 		players[j].setDefault();
@@ -114,8 +142,7 @@ function rollEvent(players) {
 					players[j].roll();
 					if (checkWin(players)) {
 						winDisplay(players);
-					}
-					console.log(players[j].getPlayerDices());
+					} console.log(players[j].getPlayerDices());
 				}
 			}
 		}
