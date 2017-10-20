@@ -158,6 +158,49 @@ function rollEvent(players) {
 	}
 }
 
+function dragEvent(players) {
+	var playersBoxes = document.querySelectorAll('.player');
+	for (var i = 0; i < playersBoxes.length; i++) {
+		playersBoxes[i].onmousedown = function(e) {
+			var dragBox = document.createElement('div');
+			dragBox.className = "dragBox";
+			
+			document.body.appendChild(dragBox);
+			console.log(dragBox.offsetHeight, dragBox.offsetWidth);
+			
+			dragBox.style.top = e.pageY - dragBox.offsetHeight/2 - 1 + 'px';
+			dragBox.style.left = e.pageX - dragBox.offsetWidth/2 - 1 + 'px';
+			
+			document.onmousemove = function(e) {
+				dragBox.style.top = e.pageY - dragBox.offsetHeight/2 - 1 + 'px';
+				dragBox.style.left = e.pageX - dragBox.offsetWidth/2 - 1 + 'px';
+			}
+			
+			dragBox.onmouseup = function(e) {
+				if(e.pageX > compareWin.rect.left && e.pageX < compareWin.rect.right && e.pageY > compareWin.rect.top && e.pageY < compareWin.rect.bottom) {	
+				} else {
+					var start = Date.now();
+					var opac = 1;
+					var timer = setInterval(function(){
+						var timedPassed = Date.now() - start;
+						
+						if(timedPassed >= 400) {
+							clearInterval(timer);
+							document.body.removeChild(dragBox);
+						}
+						opac -= 0.1;
+						dragBox.style.opacity = opac;
+					},40);
+				}
+
+				document.onmousemove = null;
+				dragBox.onmouseup = null;
+
+			}
+		}
+	}
+}
+
 function collectionHas(a, b) { //helper function (see below)
     for(var i = 0, len = a.length; i < len; i ++) {
         if(a[i] == b) return true;
@@ -173,19 +216,29 @@ function findParentBySelector(elm, selector) {
     return cur; //will return null if not found
 }
 
+var compareWin = {
+        div: document.getElementById('compareTwo'),
+		
+        rect: "", // объект с координатами поля
+		
+		box: "",
+		
+		colBox: function() {
+			var box = '<div class="compBox col-6"></div>';
+            compareWin.div.innerHTML += box;
+			compareWin.box = document.querySelector(".compBox");
+			compareWin.setRect();
+        },
+		setRect: function() {
+			compareWin.rect = compareWin.box.getBoundingClientRect();
+		}
+    }
+
 function game(){
 	var players = [];
 	var plBoxSize = "";
 	var plQ = +prompt("Введите количество игроков", "0");
-    var compareWin = {
-        div: document.getElementById('compareTwo'),
-        colBox: function() {
-            var box = '<div class="compBox col-6"></div>';
-            compareWin.div.innerHTML += box;
-        }
-    }
-    compareWin.colBox();
-
+	
 	plBoxSize = checkSizeDraw(plQ);
 
 	for (var i = 0; i < plQ; i++ ) {
@@ -196,6 +249,9 @@ function game(){
 		console.log("Player " + players[i].ident + " added");
 	}
 	rollEvent(players);
+	dragEvent(players);
+	compareWin.colBox();
+	console.log(compareWin.rect.bottom);
 }
 
 game();
